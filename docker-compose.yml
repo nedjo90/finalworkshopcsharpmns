@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    container_name: mysql
+    image: mysql:8.1
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_volume:/var/lib/mysql
+    networks:
+      - mysql_networks
+
+volumes:
+  mysql_volume:
+
+networks:
+  mysql_networks:
+
