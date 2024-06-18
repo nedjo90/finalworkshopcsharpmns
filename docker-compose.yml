@@ -6,18 +6,24 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "80:80"
     depends_on:
       - backend
+    networks:
+      - mysql_networks
 
   backend:
+    command:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "5040:8080"
+      - "5041:8081"
     depends_on:
       - mysql
+    networks:
+      - mysql_networks
 
   mysql:
     environment:
@@ -26,10 +32,12 @@ services:
       MYSQL_PASSWORD: admin
     container_name: mysql
     image: mysql:8.1
+    restart: always
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - mysql_volume:/var/lib/mysql
+      - ./mysql-scripts:/docker-entrypoint-initdb.d
     networks:
       - mysql_networks
 
@@ -38,4 +46,4 @@ volumes:
 
 networks:
   mysql_networks:
-
+    driver: bridge
