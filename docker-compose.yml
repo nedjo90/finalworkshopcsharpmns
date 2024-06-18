@@ -15,7 +15,7 @@ services:
   backend:
     command:
     build:
-      context: ./backend
+      context: ./webapi/backend
       dockerfile: Dockerfile
     ports:
       - "5040:8080"
