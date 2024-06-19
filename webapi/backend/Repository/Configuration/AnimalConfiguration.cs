@@ -15,7 +15,6 @@ public class AnimalConfiguration : IEntityTypeConfiguration<Animal>
                 Name = "Chien",
                 Description =
                     "animal naif à quatre pattes, bon renifleur",
-                RaceId = 1
             },
             new Animal()
             {
@@ -23,8 +22,9 @@ public class AnimalConfiguration : IEntityTypeConfiguration<Animal>
                 Name = "Chat",
                 Description =
                     "monstre avec des griffes à quatre pattes, 7 vies",
-                RaceId = 1
             }
         );
     }
 }
+
+//     - ./mysql-scripts:/docker-entrypoint-initdb.d

@@ -9,7 +9,4 @@ public class Animal
     public string? Name { get; set; }
     public string? Description { get; set; }
     
-    [ForeignKey(nameof(Race))]
-    public int RaceId { get; set; }
-    public Race? Race { get; set; }
 }

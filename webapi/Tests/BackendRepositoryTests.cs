@@ -38,13 +38,6 @@ public class BackendRepositoryTests
             Id = 1,
             Name = "Chien",
             Description = "animal naif à quatre pattes, bon renifleur",
-            Race = new Race
-            {
-                Id = 1,
-                Name = "Labrador Retriever",
-                Description =
-                    "Le Labrador Retriever est une race de chien de taille moyenne à grande, connue pour son tempérament doux et amical. Ils sont intelligents, faciles à dresser, et excellents avec les enfants, ce qui en fait des animaux de compagnie idéaux. Les Labradors ont un pelage court et dense, souvent noir, jaune ou chocolat."
-            }
         };
 
         // Créer un mock pour IAnimalRepository
@@ -77,8 +70,8 @@ public class BackendRepositoryTests
 
             // Ajouter des données initiales si nécessaire
             context.Animals.AddRange(
-                new Animal { Name = "Dog", Description = "Friendly animal", RaceId = 1 },
-                new Animal { Name = "Cat", Description = "Playful animal", RaceId = 2 }
+                new Animal { Name = "Dog", Description = "Friendly animal"},
+                new Animal { Name = "Cat", Description = "Playful animal"}
             );
 
             context.SaveChanges(); // Enregistrer les changements dans la base de données In-Memory
@@ -93,7 +86,6 @@ public class BackendRepositoryTests
             {
                 Name = "New Animal",
                 Description = "Description of the new animal",
-                RaceId = 1 // Assurez-vous que RaceId correspond à une race existante dans votre application
             };
 
             // Ajouter l'animal dans le repository
@@ -126,8 +118,8 @@ public class BackendRepositoryTests
         // Seed the database with some animals
         using (var context = new BackendContext(options))
         {
-            context.Animals.Add(new Animal { Id = 1, Name = "Dog", Description = "Friendly dog", RaceId = 1 });
-            context.Animals.Add(new Animal { Id = 2, Name = "Cat", Description = "Playful cat", RaceId = 2 });
+            context.Animals.Add(new Animal { Id = 1, Name = "Dog", Description = "Friendly dog" });
+            context.Animals.Add(new Animal { Id = 2, Name = "Cat", Description = "Playful cat" });
             await context.SaveChangesAsync();
         }
 
@@ -158,8 +150,8 @@ public class BackendRepositoryTests
         // Seed the database with some animals
         using (var context = new BackendContext(options))
         {
-            context.Animals.Add(new Animal { Id = 1, Name = "Dog", Description = "Friendly dog", RaceId = 1 });
-            context.Animals.Add(new Animal { Id = 2, Name = "Cat", Description = "Playful cat", RaceId = 2 });
+            context.Animals.Add(new Animal { Id = 1, Name = "Dog", Description = "Friendly dog" });
+            context.Animals.Add(new Animal { Id = 2, Name = "Cat", Description = "Playful cat" });
             await context.SaveChangesAsync();
         }
 
@@ -184,7 +176,6 @@ public class BackendRepositoryTests
                 Id = new Random().Next(),
                 Name = "AnimalName",
                 Description = "Description of a animal",
-                RaceId = 1
             }
         };
     }

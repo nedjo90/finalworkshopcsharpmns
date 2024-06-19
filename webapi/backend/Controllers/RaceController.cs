@@ -8,7 +8,6 @@ namespace backend.Controllers;
 
 [Route("api/races")]
 [ApiController]
-[Authorize]
 public class RaceController : ControllerBase
 {
     private readonly IServiceManager _serviceManager;

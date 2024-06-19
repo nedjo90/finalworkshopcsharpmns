@@ -12,32 +12,46 @@ const Home = ({username}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setListOfAnimals(fetchAnimals());
+        fetchAnimals();
     }, []);
 
     const fetchAnimals = async () => {
-        await animalService.getAll();
+        const data = await animalService.getAll();
+        setListOfAnimals(data);
     };
 
+    const handleDeleteAnimal = async () => {
 
-    const handleCreateAnimal = async () => {
-        await animalService.create(newAnimalName, newAnimalDescription)
-            .then(createdAnimal => {
-                console.log('Animal created:', createdAnimal);
-                fetchAnimals();
-                setNewAnimalName('');
-                setNewAnimalDescription('');
-                setError(null);
-            })
-            .catch(error => {
-                console.error('Error creating animal:', error);
-                setError(error);
-            });
+    };
+
+    const handleCreateAnimal = async (e) => {
+        e.preventDefault();
+
+        try {
+            const createdAnimal = await animalService.create(newAnimalName, newAnimalDescription);
+            console.log('Animal created:', createdAnimal);
+
+            await fetchAnimals();
+
+            setNewAnimalName('');
+            setNewAnimalDescription('');
+            setError(null);
+        }
+        catch (error) {
+            console.error('Error creating animal:', error);
+            setError(error);
+
+            // Gérer spécifiquement les erreurs liées aux tokens JWT ici
+            if (error.response && error.response.status === 401) {
+                // Redirection vers la page de login ou affichage d'un message d'erreur
+                console.log('Unauthorized access or token expired. Redirecting to login page...');
+            }
+        }
     };
 
     return (
         <div style={{
-            maxWidth: '600px',
+            maxWidth: '1000px',
             margin: 'auto',
             padding: '20px',
             border: '1px solid #ccc',
@@ -58,32 +72,66 @@ const Home = ({username}) => {
                 marginBottom: '10px'
             }}>Animals:</h2>
             <ul style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
                 listStyleType: 'none',
-                padding: '0'
+                padding: '10px'
             }}>
-                {animals.map(animal => (
-                    <li key={animal.id} style={{
-                        marginBottom: '10px',
-                        border: '1px solid #eee',
-                        padding: '10px',
-                        borderRadius: '5px'
-                    }}>
-                        <strong>{animal.name}</strong>: {animal.description}
-                    </li>
+                {listOfAnimals.map(item => (
+                    <>
+                        <li key={item.id} style={{
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: "5px",
+                            marginBottom: '100px',
+                            border: '1px solid #eee',
+                            padding: '10px',
+                            borderRadius: '5px'
+                        }}><strong>{item.name}:</strong>
+                            <p style={{
+                                wordWrap: "break-word",
+                                width: "50%"
+                            }}>{item.description}</p>
+                            <button style={{
+                                height: "50px",
+                                width: "100px"
+                            }} onClick={() => handleDeleteAnimal(item.id)}>Delete
+                            </button>
+                        </li>
+                    </>
                 ))}
             </ul>
 
             <h3 style={{
                 fontSize: '16px',
                 marginTop: '20px',
-                marginBottom: '10px'
+                marginBottom: '30px'
             }}>Add a New Animal:</h3>
-            <form onSubmit={handleCreateAnimal} style={{marginBottom: '20px'}}>
-                <label style={{
-                    display: 'block',
-                    marginBottom: '10px'
-                }}>
-                    Name:
+            <form onSubmit={handleCreateAnimal} style={{
+                marginBottom: '20px',
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                alignItems: "center",
+                justifyContent: "space-around"
+            }}>
+                <div
+                    style={{
+                        width: "50%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-around"
+                    }}>
+
+                    <label style={{
+                        marginBottom: '10px'
+                    }}>
+                        Name:
+                    </label>
                     <input
                         type="text"
                         value={newAnimalName}
@@ -95,13 +143,22 @@ const Home = ({username}) => {
                             border: '1px solid #ccc'
                         }}
                     />
-                </label>
+                </div>
                 <br/>
-                <label style={{
-                    display: 'block',
-                    marginBottom: '10px'
-                }}>
-                    Description:
+                <div
+                    style={{
+                        width: "50%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-around"
+                    }}>
+
+                    <label style={{
+                        display: 'block',
+                        marginBottom: '10px'
+                    }}>
+                        Description:
+                    </label>
                     <input
                         type="text"
                         value={newAnimalDescription}
@@ -113,7 +170,7 @@ const Home = ({username}) => {
                             border: '1px solid #ccc'
                         }}
                     />
-                </label>
+                </div>
                 <br/>
                 <button type="submit" style={{
                     padding: '8px 20px',

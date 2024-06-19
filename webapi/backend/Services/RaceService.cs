@@ -32,6 +32,10 @@ internal sealed class RaceService : IRaceService
     public async Task<IEnumerable<RaceDto>> GetAllRaceAsync(bool trackChanges)
     {
         IEnumerable<Race> races = await _backendManager.Race.GetAllRacesAsync(trackChanges);
+        foreach (Race race in races)
+        {
+            race.Animal = await _backendManager.Animal.GetAnimalAsync(race.AnimalId, false);
+        }
         IEnumerable<RaceDto>? racesDto = _mapper.Map<IEnumerable<RaceDto>>(races);
         return racesDto;
     }
@@ -39,12 +43,14 @@ internal sealed class RaceService : IRaceService
     public async Task<RaceDto> GetRaceAsync(int raceId, bool trackChanges)
     {
         Race race = await GetRaceAndCheckIfItExists(raceId, trackChanges);
+        race.Animal = await _backendManager.Animal.GetAnimalAsync(race.AnimalId, false);
         RaceDto? raceDto = _mapper.Map<RaceDto>(race);
         return raceDto;
     }
 
     public async Task<RaceDto> CreateRaceAsync(RaceForCreationDto? race)
     {
+        await _backendManager.Animal.GetAnimalAsync(race!.AnimalId, false);
         Race? raceEntity = _mapper.Map<Race>(race);
         _backendManager.Race.CreateRace(raceEntity);
         await _backendManager.SaveAsync();
@@ -61,6 +67,7 @@ internal sealed class RaceService : IRaceService
 
     public async Task UpdateRaceAsync(int raceId, RaceForUpdateDto raceForUpdate, bool trackChanges)
     {
+        await _backendManager.Animal.GetAnimalAsync(raceForUpdate.AnimalId, false);
         Race raceEntity = await GetRaceAndCheckIfItExists(raceId, trackChanges);
         _mapper.Map(raceForUpdate, raceEntity);
         await _backendManager.SaveAsync();

@@ -13,4 +13,7 @@ public record RaceForUpdateDto
     [MinLength(2, ErrorMessage = "Minimum length for the Description is 2 characters")]
     [MaxLength(120, ErrorMessage = "Maximum length for the Description is 120 characters")]
     public string? Description { get; init; }
+        
+    [Required(ErrorMessage = "Animal Id is a required field.")]
+    public int AnimalId { get; init; }
 }
