@@ -12,7 +12,7 @@ const getById = (id) =>{
 const getAll = () =>{
     return axios.get(`${baseUrl}`)
         .then(response => {
-            return response.data;
+            return (JSON.parse(response.data));
         })
 }
 

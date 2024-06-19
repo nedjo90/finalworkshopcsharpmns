@@ -16,7 +16,7 @@ endif
 
 
 run: docker
-	$(OPEN_COMMAND) "http://localhost:80"
+	$(OPEN_COMMAND) "http://localhost:5043"
 
 docker:
 	docker compose up -d

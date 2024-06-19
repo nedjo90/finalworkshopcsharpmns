@@ -8,19 +8,17 @@ const Home = ({username}) => {
     const [animals, setAnimals] = useState([]);
     const [newAnimalName, setNewAnimalName] = useState('');
     const [newAnimalDescription, setNewAnimalDescription] = useState('');
+    const [listOfAnimals, setListOfAnimals] = useState([]);
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+        setListOfAnimals(fetchAnimals());
+    }, []);
+
     const fetchAnimals = async () => {
-        await animalService.getAll()
-            .then(data => {
-                setAnimals(data);
-                setError(null);
-            })
-            .catch(error => {
-                console.error('Error fetching animals:', error);
-                setError(error);
-            });
+        await animalService.getAll();
     };
+
 
     const handleCreateAnimal = async () => {
         await animalService.create(newAnimalName, newAnimalDescription)
