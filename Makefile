@@ -22,7 +22,10 @@ docker:
 	docker compose up -d
 
 clean:
+	docker compose down
+
+fclean:
 	docker compose down --rmi all -v
 
-re: clean run
+re: fclean run
 	
