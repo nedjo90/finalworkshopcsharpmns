@@ -21,9 +21,14 @@ builder.Services.AddAutoMapper(typeof(Program));
 WebApplication app = builder.Build();
 
 app.UseExceptionHandler();
+
+app.UseHttpsRedirection(); 
+app.UseStaticFiles();
+
+app.UseRouting();
 app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.MapControllers();
 
-app.MigrateDatabase();
+//app.MigrateDatabase();
 app.Run();

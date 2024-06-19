@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'http://mysql:5040/api/animals';
+const baseUrl = 'http://localhost:5040/api/animals';
 
 const getById = (id) =>{
     return axios.get(`${baseUrl}/id`)

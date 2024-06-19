@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'http://mysql:5040/api/authentication'
+const baseUrl = 'http://localhost:5040/api/authentication'
 
 const registration = (username, email, password) => {
     const userData = {
