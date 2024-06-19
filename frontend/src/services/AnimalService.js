@@ -12,21 +12,21 @@ const getById = (id) =>{
 const getAll = () =>{
     return axios.get(`${baseUrl}`)
         .then(response => {
-            console.log("raw data", response.data);
-            response.data.forEach(item => {
-                console.log("Object:", item);
-                // Vous pouvez accéder aux propriétés de chaque objet ici
-                console.log("ID:", item.id);
-                console.log("Name:", item.name);
-                console.log("Description:", item.description);
-                // etc.
-            });
             return response.data
         })
 }
 
 const deleteAnimal = (id) => {
     return axios.delete(`${baseUrl}/${id}`);
+}
+
+const updateAnimal = (id, name, description) => {
+    const animal = {
+        id: id,
+        name: name,
+        description: description
+    }
+    return axios.put(`${baseUrl}/${id}`, animal);
 }
 
 const create = (name, description) =>{
@@ -43,4 +43,4 @@ const create = (name, description) =>{
         })
 }
 
-export default {create, getAll, getById}
+export default {create, getAll, getById, deleteAnimal, updateAnimal}

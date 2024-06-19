@@ -49,6 +49,7 @@ public class AnimalController : ControllerBase
         return NoContent();
     }
     
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAnimal(int id, [FromBody] AnimalForUpdateDto? animal)
     {
         await _serviceManager.AnimalService.UpdateAnimalAsync(id, animal!, trackChanges: true);

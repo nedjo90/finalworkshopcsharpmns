@@ -15,7 +15,7 @@ ifeq ($(findstring MINGW,$(UNAME)), MINGW)
 endif
 
 
-run: docker
+run: docker sleep_with_timer
 	$(OPEN_COMMAND) "http://localhost:5043"
 
 docker:
@@ -28,4 +28,8 @@ fclean:
 	docker compose down --rmi all -v
 
 re: fclean run
+
+sleep_with_timer:
+	@bash -c 'for ((i=1;i<=100;i++)); do printf "\rAlmost done %i%%" $$i;\
+	sleep 0.1; done; echo ""'
 	

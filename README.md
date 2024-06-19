@@ -3,7 +3,7 @@
 ## Cloner le repo et lancer le projet
 
 ```
-git clone git@github.com:nedjo90/finalworkshopcsharpmns.git && cd finalworkshopcsharpmns && make
+git clone https://github.com/nedjo90/finalworkshopcsharpmns.git && cd finalworkshopcsharpmns && make
 ```
 
 
