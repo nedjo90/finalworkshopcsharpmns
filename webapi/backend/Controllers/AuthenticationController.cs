@@ -42,4 +42,10 @@ public class AuthenticationController : ControllerBase
             .AuthenticationService.CreateToken() });
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _service.AuthenticationService.LogOut();
+        return Ok();
+    }
 }

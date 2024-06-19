@@ -14,10 +14,8 @@ ifeq ($(findstring MINGW,$(UNAME)), MINGW)
     OPEN_COMMAND := start
 endif
 
-# Cible pour ouvrir le lien
-.PHONY: openlink
 
-openlink: docker
+run: docker
 	$(OPEN_COMMAND) "http://localhost:80"
 
 docker:
@@ -26,3 +24,5 @@ docker:
 clean:
 	docker compose down --rmi all -v
 
+re: clean run
+	

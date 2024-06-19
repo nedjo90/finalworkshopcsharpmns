@@ -10,7 +10,15 @@ namespace backend;
 
 public static class ServicesExtensions
 {
-    
+    public static void ConfigureCors(this IServiceCollection services) =>
+        services.AddCors(options => 
+            options.AddPolicy("CorsPolicy", builder =>
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("X-Pagination")
+            )
+        );
     public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<BackendContext>(optionsAction =>
@@ -32,6 +40,7 @@ public static class ServicesExtensions
         builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole),
             builder.Services);
         builder.AddEntityFrameworkStores<BackendContext>()
+            .AddSignInManager<SignInManager<User>>()
             .AddDefaultTokenProviders();
     }
     

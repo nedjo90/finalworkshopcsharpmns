@@ -17,7 +17,7 @@ public sealed class ServiceManager : IServiceManager
 
 
     public ServiceManager(
-        IBackendManager backendManager, IMapper mapper, UserManager<User> userManager, IConfiguration configuration)
+        IBackendManager backendManager, IMapper mapper, UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager)
     {
         _raceService = new Lazy<IRaceService>(() =>
             new RaceService(backendManager, mapper));
@@ -25,6 +25,6 @@ public sealed class ServiceManager : IServiceManager
             new AnimalService(backendManager, mapper));
         _authenticationService = new Lazy<IAuthenticationService>(() =>
             new AuthenticationService( mapper, userManager,
-                configuration));
+                configuration, signInManager));
     }
 }

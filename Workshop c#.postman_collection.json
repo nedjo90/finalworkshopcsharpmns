@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "2ccdd1d4-44a3-4485-9a11-03b656fed7b0",
+		"name": "Workshop c#",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26017768"
+	},
+	"item": [
+		{
+			"name": "Race",
+			"item": [
+				{
+					"name": "get race",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5040/api/races/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Races",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5040/api/races"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Race",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rotweiler\",\n    \"description\": \"Des grosses dents\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5040/api/races"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Race",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:5040/api/races/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Race",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"11\",\n    \"name\": \"Rottt\",\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5040/api/races/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Options Races",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": "http://localhost:5040/api/races"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Animal",
+			"item": [
+				{
+					"name": "Get Animal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTkyNzAzMDIsImlzcyI6IldvcmtzaG9wQVBJIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDQwIn0.FH70ctis8jfCdSb_QlswYD8fWDmrC0vBOcjI40p2eX4"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5040/api/animals/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Animals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5040/api/animals"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Animal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rotweiler\",\n    \"description\": \"Des grosses dents\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5040/api/animals"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Animal",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:5040/api/animals/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Animal",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"11\",\n    \"name\": \"Rottt\",\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5040/api/animals/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Options Animals",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": "http://localhost:5040/api/animals"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"john\",\n    \"email\": \"john@doe.com\",\n    \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5040/api/authentication"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"john\",\n    \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5040/api/authentication/login"
+			},
+			"response": []
+		}
+	]
+}

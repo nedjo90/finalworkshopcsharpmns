@@ -13,6 +13,7 @@ namespace backend.Services;
 public class AuthenticationService : IAuthenticationService
 {
     private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
     private readonly IMapper _mapper;
     private readonly JwtConfiguration _jwtConfiguration;
     private readonly IConfiguration _configuration;
@@ -20,13 +21,14 @@ public class AuthenticationService : IAuthenticationService
 
     public AuthenticationService
     (IMapper mapper, UserManager<User> userManager,
-        IConfiguration configuration)
+        IConfiguration configuration, SignInManager<User> signInManager)
     {
         _userManager = userManager;
         _mapper = mapper;
         _jwtConfiguration = new JwtConfiguration();
         configuration.Bind(_jwtConfiguration.Section, _jwtConfiguration);
         _configuration = configuration;
+        _signInManager = signInManager;
     }
 
     public async Task<IdentityResult> RegisterUser(UserForRegistrationDto
@@ -58,6 +60,11 @@ public class AuthenticationService : IAuthenticationService
             Encoding.UTF8.GetBytes(_jwtConfiguration.SecretKey);
         SymmetricSecurityKey secret = new SymmetricSecurityKey(key);
         return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+    }
+
+    public async Task LogOut()
+    {
+        await _signInManager.SignOutAsync();
     }
 
     private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials)

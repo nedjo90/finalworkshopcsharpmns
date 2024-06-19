@@ -7,6 +7,7 @@ using backend.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureCors();
 builder.Services.AddScoped<IBackendManager, BackendManager>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
@@ -20,6 +21,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 WebApplication app = builder.Build();
 
 app.UseExceptionHandler();
+app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.MapControllers();
 
