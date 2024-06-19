@@ -46,7 +46,13 @@ function App() {
                                            onChange={(e) => setPassword(e.target.value)}
                                            placeholder="Password"/>
                                 </li>
-                                <button onClick={handleLogin}>Login</button>
+                                <li>
+                                    <button onClick={handleLogin}>Login</button>
+                                </li>
+                                <li>
+                                    <p>Gagne du temps tu es un dev passe cette étape <a style={{cursor: "pointer"}}
+                                        onClick={() => {setIsLogin(true);}}>clique ici</a></p>
+                                </li>
                             </ul>
                         </div>
                     : <div>
@@ -54,17 +60,29 @@ function App() {
                         <ul style={{listStyleType: "none"}}>
                             <li>
                                 <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}
-                                   placeholder="UserName"/>
+                                       placeholder="UserName"/>
                             </li>
                             <li>
                                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                                   placeholder="Email"/>
+                                       placeholder="Email"/>
                             </li>
                             <li>
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                                   placeholder="Password"/>
+                                       placeholder="Password"/>
                             </li>
-                            <button onClick={handleRegistration}>Sign In</button>
+                            <li>
+                                <button onClick={handleRegistration}>Sign In</button>
+                            </li>
+                            <li>
+                                <p>Already have an <a style={{cursor: "pointer"}} onClick={() => {setIsSignIn(true);}}>account</a></p>
+                            </li>
+                            <li>
+                                <p>Y en a marre de faire un login à chaque fois <a style={{cursor: "pointer"}} onClick={() => {
+                                    setIsSignIn(true);
+                                    setIsLogin(true);
+                                }}>clique
+                                    ici</a></p>
+                            </li>
                         </ul>
                     </div>
             }

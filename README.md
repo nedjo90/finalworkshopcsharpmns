@@ -1,5 +1,12 @@
 # Utiliser les commandes ci dessous pour le projet
 
+## Cloner le repo et lancer le projet
+
+```
+$  git clone git@github.com:nedjo90/finalworkshopcsharpmns.git && cd finalworkshopcsharpmns && make
+```
+
+
 ## Commandes Makefile
 
 ### Lancer tout automatiquement (MySQL + API + Frontend, puis ouvrir le navigateur)
