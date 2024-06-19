@@ -3,7 +3,7 @@
 ## Cloner le repo et lancer le projet
 
 ```
-$  git clone git@github.com:nedjo90/finalworkshopcsharpmns.git && cd finalworkshopcsharpmns && make
+git clone git@github.com:nedjo90/finalworkshopcsharpmns.git && cd finalworkshopcsharpmns && make
 ```
 
 
@@ -14,13 +14,13 @@ $  git clone git@github.com:nedjo90/finalworkshopcsharpmns.git && cd finalworksh
 Pour lancer tous les services (MySQL, API, Frontend) et ouvrir automatiquement le navigateur :
 
 ```
-$ make
+make
 ```
 
 ou explicitement :
 
 ```
-$ make run
+make run
 ```
 
 ### Lancer uniquement le docker-compose up
@@ -28,7 +28,7 @@ $ make run
 Pour démarrer les conteneurs Docker en arrière-plan :
 
 ```
-$ make docker
+make docker
 ```
 
 ### Arrêter les conteneurs Docker
@@ -36,7 +36,7 @@ $ make docker
 Pour arrêter les conteneurs Docker en cours d'exécution :
 
 ```
-$ make clean
+make clean
 ```
 
 ### Arrêter les conteneurs, supprimer les images et les volumes
@@ -44,7 +44,7 @@ $ make clean
 Pour nettoyer complètement l'environnement Docker (arrêter les conteneurs, supprimer les images et les volumes) :
 
 ```
-$ make fclean
+make fclean
 ```
 
 ### Tout supprimer et tout relancer
@@ -52,7 +52,7 @@ $ make fclean
 Pour effectuer un nettoyage complet, puis relancer tous les services :
 
 ```
-$ make re
+make re
 ```
 ---
 
