@@ -1,34 +1,51 @@
-# lancer tout automatiquement (mysql + api + front => launch browser)
-```makefile
->$ make
-```
+# Utiliser les commandes ci dessous pour le projet
 
-ou
+## Commandes Makefile
 
-```makefile
->$ make
-```
+### Lancer tout automatiquement (MySQL + API + Frontend, puis ouvrir le navigateur)
 
-# lancer uniquement le docker compose up
+Pour lancer tous les services (MySQL, API, Frontend) et ouvrir automatiquement le navigateur :
 
 ```
->$ make docker
+$ make
 ```
 
-# Arrêter les conteneurs
+ou explicitement :
 
 ```
->$ make clean
+$ make run
 ```
 
-# Arrêter les conteneurs supprimer les images et les volumes
+### Lancer uniquement le docker-compose up
+
+Pour démarrer les conteneurs Docker en arrière-plan :
 
 ```
->$ make fclean
+$ make docker
 ```
 
-# Tout supprimer et tout relancer
+### Arrêter les conteneurs Docker
+
+Pour arrêter les conteneurs Docker en cours d'exécution :
 
 ```
->$ make re
+$ make clean
 ```
+
+### Arrêter les conteneurs, supprimer les images et les volumes
+
+Pour nettoyer complètement l'environnement Docker (arrêter les conteneurs, supprimer les images et les volumes) :
+
+```
+$ make fclean
+```
+
+### Tout supprimer et tout relancer
+
+Pour effectuer un nettoyage complet, puis relancer tous les services :
+
+```
+$ make re
+```
+---
+
