@@ -5,7 +5,6 @@ const baseUrl = 'http://localhost:5040/api/races';
 const getAll = () =>{
     return axios.get(`${baseUrl}`)
         .then(response => {
-            console.table(response.data);
             return response.data
         })
 }
@@ -19,7 +18,7 @@ const updateRace = (id, name, description, animalid) => {
         id: id,
         name: name,
         description: description,
-        animalid: animalid
+        animalid: animalid * 1
     }
     return axios.put(`${baseUrl}/${id}`, race);
 }

@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import animalService from '../services/AnimalService.js';
 
-const Animals = ({username}) => {
+const Animals = () => {
     const [searchByName, setSearchByName] = useState('');
     const [newAnimalName, setNewAnimalName] = useState('');
     const [newAnimalDescription, setNewAnimalDescription] = useState('');
@@ -15,7 +15,8 @@ const Animals = ({username}) => {
     const [descriptionUpdate, setDescriptionUpdate] = useState('');
 
     useEffect(() => {
-        fetchAnimals();
+        fetchAnimals()
+             .then(() =>{});
     }, []);
 
     const fetchAnimals = async () => {
@@ -25,7 +26,7 @@ const Animals = ({username}) => {
 
     const handleDeleteAnimal = async (id) => {
         await animalService.deleteAnimal(id);
-        fetchAnimals();
+        await fetchAnimals();
     };
 
     const handleUpdateAnimal = async () => {
@@ -40,8 +41,7 @@ const Animals = ({username}) => {
         e.preventDefault();
 
         try {
-            const createdAnimal = await animalService.create(newAnimalName, newAnimalDescription);
-            console.log('Animal created:', createdAnimal);
+            await animalService.create(newAnimalName, newAnimalDescription);
 
             await fetchAnimals();
 
@@ -87,12 +87,11 @@ const Animals = ({username}) => {
             padding: '10px'
         }}>
             {listOfAnimals.filter((e) => {
-                if (searchByName === '')
-                    return true;
+                if (searchByName === '') return true;
                 return e.name.toLowerCase()
                     .startsWith(searchByName.toLowerCase());
             })
-                .map(item => (item.id !== idToUpdate ? <>
+                .map(item => (item.id !== idToUpdate ?
                     <li key={item.id} style={{
                         width: "100%",
                         display: "flex",
@@ -132,7 +131,7 @@ const Animals = ({username}) => {
                             </button>
                         </div>
                     </li>
-                </> : <>
+                 :
                     <li key={item.id} style={{
                         width: "100%",
                         display: "flex",
@@ -150,8 +149,8 @@ const Animals = ({username}) => {
                             wordWrap: "break-word",
                             width: "50%"
                         }}
-                               value={descriptionUpdate}
-                               onChange={(event) => {setDescriptionUpdate(event.target.value);}}
+                                  value={descriptionUpdate}
+                                  onChange={(event) => {setDescriptionUpdate(event.target.value);}}
                         ></textarea>
                         <div style={{
                             display: "flex",
@@ -173,7 +172,7 @@ const Animals = ({username}) => {
                             </button>
                         </div>
                     </li>
-                </>))}
+                ))}
         </ul>
 
         <h3 style={{

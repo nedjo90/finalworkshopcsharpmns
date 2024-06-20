@@ -5,7 +5,7 @@ import React, {
 import raceService from "../services/RaceService.js";
 import animalService from '../services/AnimalService.js';
 
-const Races = ({username}) => {
+const Races = () => {
     const [searchByName, setSearchByName] = useState('');
     const [newRaceName, setNewRaceName] = useState('');
     const [newRaceDescription, setNewRaceDescription] = useState('');
@@ -19,7 +19,8 @@ const Races = ({username}) => {
     const [descriptionUpdate, setDescriptionUpdate] = useState('');
 
     useEffect(() => {
-        fetchRaces();
+        fetchRaces()
+            .then(() => {});
 
     }, []);
     const fetchRaces = async () => {
@@ -54,15 +55,13 @@ const Races = ({username}) => {
     };
 
     const handleChangeAnimalType = (event) => {
-        console.log(event.target.value);
         setAnimalidToUpdate(event.target.value);
     };
 
     const handleCreateRace = async (e) => {
         e.preventDefault();
         try {
-            const createdAnimal = await raceService.createRace(newRaceName, newRaceDescription, newRaceAnimalId);
-            console.log('Animal created:', createdAnimal);
+            await raceService.createRace(newRaceName, newRaceDescription, newRaceAnimalId);
 
             await fetchRaces();
 
@@ -74,13 +73,14 @@ const Races = ({username}) => {
         catch (error) {
             console.error('Error creating animal:', error);
             setError(error);
-
-            // Gérer spécifiquement les erreurs liées aux tokens JWT ici
             if (error.response && error.response.status === 401) {
-                // Redirection vers la page de login ou affichage d'un message d'erreur
                 console.log('Unauthorized access or token expired. Redirecting to login page...');
             }
         }
+    };
+
+    const AnimalTypeId = (event) => {
+        setNewRaceAnimalId(event.target.value);
     };
 
     return (<div style={{
@@ -111,110 +111,109 @@ const Races = ({username}) => {
                 return e.name.toLowerCase()
                     .startsWith(searchByName.toLowerCase());
             })
-                .map(item => (item.id !== idToUpdate ? <>
-                    <li key={item.id} style={{
-                        width: "100%",
+                .map(item => (item.id !== idToUpdate ? <li key={item.id} style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: "5px",
+                    marginBottom: '100px',
+                    border: '1px solid #eee',
+                    padding: '10px',
+                    borderRadius: '5px'
+                }}>
+                    <div style={{
                         display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        gap: "5px",
-                        marginBottom: '100px',
-                        border: '1px solid #eee',
-                        padding: '10px',
-                        borderRadius: '5px'
+                        flexDirection: "column",
+                        justifyContent: "space-around"
                     }}>
-                        <div style={{
+                        <strong>{item.name}:</strong>
+                        <strong><i>Type of animal</i>: {typeOfAnimal(item.animal.id)}</strong>
+                    </div>
+                    <p style={{
+                        wordWrap: "break-word",
+                        width: "50%"
+                    }}>{item.description}</p>
+                    <div style={{
+                        display: "flex",
+                        gap: "10px"
+                    }}>
+                        <button style={{
+                            height: "50px",
+                            width: "100px"
+                        }} onClick={() => {
+                            handleDeleteRace(item.id)
+                                .then(() => {});
+                        }}>Delete
+                        </button>
+                        <button style={{
+                            height: "50px",
+                            width: "100px"
+                        }} onClick={() => {
+                            setIdToUpdate(item.id);
+                            setNameUpdate(item.name);
+                            setDescriptionUpdate(item.description);
+                            setAnimalidToUpdate(item.animal.id);
+                        }}>Update
+                        </button>
+                    </div>
+                </li> : <li key={item.id} style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: "5px",
+                    marginBottom: '100px',
+                    border: '1px solid #eee',
+                    padding: '10px',
+                    borderRadius: '5px'
+                }}>
+                    <div
+                        style={{
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-around"
-                        }}>
-                            <strong>{item.name}:</strong>
-                            <strong><i>Type of animal</i>: {typeOfAnimal(item.animal.id)}</strong>
-                        </div>
-                        <p style={{
-                            wordWrap: "break-word",
-                            width: "50%"
-                        }}>{item.description}</p>
-                        <div style={{
-                            display: "flex",
-                            gap: "10px"
-                        }}>
-                            <button style={{
-                                height: "50px",
-                                width: "100px"
-                            }} onClick={() => {handleDeleteRace(item.id);}}>Delete
-                            </button>
-                            <button style={{
-                                height: "50px",
-                                width: "100px"
-                            }} onClick={() => {
-                                setIdToUpdate(item.id);
-                                setNameUpdate(item.name);
-                                setDescriptionUpdate(item.description);
-                                setAnimalidToUpdate(item.animal.id);
-                            }}>Update
-                            </button>
-                        </div>
-                    </li>
-                </> : <>
-                    <li key={item.id} style={{
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        gap: "5px",
-                        marginBottom: '100px',
-                        border: '1px solid #eee',
-                        padding: '10px',
-                        borderRadius: '5px'
-                    }}>
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                            <input value={nameUpdate}
-                                   onChange={(event) => {setNameUpdate(event.target.value);}}></input>
-                            <label><i>Type of animal</i></label>
-                            <select value={animalidToUpdate} onChange={handleChangeAnimalType}>
-                                <option value="" disabled>Select an option</option>
-                                {listOfAnimals.map((animal, index) => (<option key={index} value={animal.id}
-                                                                               selected={animal.id === animalidToUpdate}>{animal.name}</option>))}
-                            </select>
-                        </div>
-                        <textarea style={{
-                            wordWrap: "break-word",
-                            width: "50%"
                         }}
-                                  value={descriptionUpdate}
-                                  onChange={(event) => {setDescriptionUpdate(event.target.value);}}
-                        ></textarea>
-                        <div style={{
-                            display: "flex",
-                            gap: "10px"
-                        }}>
-                            <button style={{
-                                height: "50px",
-                                width: "100px"
-                            }} onClick={handleUpdateRace}>Ok
-                            </button>
-                            <button style={{
-                                height: "50px",
-                                width: "100px"
-                            }} onClick={() => {
-                                setIdToUpdate(-1);
-                                setAnimalidToUpdate(-1);
-                                setNameUpdate('');
-                                setDescriptionUpdate('');
-                            }}>Cancel
-                            </button>
-                        </div>
-                    </li>
-                </>))}
+                    >
+                        <input value={nameUpdate}
+                               onChange={(event) => {setNameUpdate(event.target.value);}}></input>
+                        <label><i>Type of animal</i></label>
+                        <select value={animalidToUpdate} onChange={handleChangeAnimalType}>
+                            <option value="" disabled>Select an option</option>
+                            {listOfAnimals.map((animal, index) => (<option key={index} value={animal.id}
+                                                                           selected={animal.id === animalidToUpdate}>{animal.name}</option>))}
+                        </select>
+                    </div>
+                    <textarea style={{
+                        wordWrap: "break-word",
+                        width: "50%"
+                    }}
+                              value={descriptionUpdate}
+                              onChange={(event) => {setDescriptionUpdate(event.target.value);}}
+                    ></textarea>
+                    <div style={{
+                        display: "flex",
+                        gap: "10px"
+                    }}>
+                        <button style={{
+                            height: "50px",
+                            width: "100px"
+                        }} onClick={handleUpdateRace}>Ok
+                        </button>
+                        <button style={{
+                            height: "50px",
+                            width: "100px"
+                        }} onClick={() => {
+                            setIdToUpdate(-1);
+                            setAnimalidToUpdate(-1);
+                            setNameUpdate('');
+                            setDescriptionUpdate('');
+                        }}>Cancel
+                        </button>
+                    </div>
+                </li>))}
         </ul>
 
 
@@ -256,10 +255,10 @@ const Races = ({username}) => {
                     }}
                 />
                 <label><i>Type of animal</i></label>
-                <select value={newRaceAnimalId} onChange={(e) => setNewRaceAnimalId(e.target.value)}>
-                    <option value="" disabled>Select an option</option>
+                <select value={newRaceAnimalId} onChange={(event) => {AnimalTypeId(event);}}>
+                    <option value="" selected={true}>Select an option</option>
                     {listOfAnimals.map((animal, index) => (<option key={index} value={animal.id}
-                                                                   >{animal.name}</option>))}
+                    >{animal.name}</option>))}
                 </select>
             </div>
             <br/>
